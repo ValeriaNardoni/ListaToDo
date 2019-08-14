@@ -1,2 +1,0 @@
-# ListaToDo
-Programma per esame
