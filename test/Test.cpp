@@ -23,13 +23,28 @@ class Test: public QObject
 {
 Q_OBJECT
 private slots:
-    void TestSave();
+    void TestNameList();
+    void TestTestCompleted();
 };
 
-void Test::TestSave()
+void Test::TestNameList()
 {
+    ListToDo *listToDo = new ListToDo("TestNameList");
+    QCOMPARE( listToDo->name(), QString("TestNameList"));
+    // qDebug() << "Test Funziona";
 
 }
+
+void Test::TestTestCompleted()
+{
+    // ListToDo *listToDo = new ListToDo("TestNameList");
+    Task *task = new Task("nameTask");
+    QCOMPARE( task->isCompleted(), 0);
+    task->setCompleted();
+    QCOMPARE( task->isCompleted(), 1);
+
+}
+
 
 QTEST_MAIN(Test)
 #include "Test.moc"
