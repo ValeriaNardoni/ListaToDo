@@ -10,7 +10,7 @@
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
         ui(new Ui::MainWindow),
-        mListToDos()
+        mListToDos() //QVector
 {
 
     ui->setupUi(this);
@@ -30,7 +30,7 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::addListToDo()
+void MainWindow::addListToDo()  //la funzione  mi permette di aggiungere nuove checklist
 {
     bool ok;
 
@@ -45,7 +45,7 @@ void MainWindow::addListToDo()
         ListToDo *listToDo = new ListToDo(name);
         connect(listToDo, &ListToDo::removed, this, &MainWindow::removeListToDo);
         connect(listToDo, &ListToDo::statusChanged, this, &MainWindow::listToDoStatusChanged);
-        mListToDos.append(listToDo);
+        mListToDos.append(listToDo); //la nuova checklist viene aggiunta al QVector
 
         ui->listToDosLayout->addWidget(listToDo);
         updateStatus();
@@ -56,7 +56,7 @@ void MainWindow::addListToDo()
 
 
 
-void MainWindow::removeListToDo(ListToDo *listToDo)
+void MainWindow::removeListToDo(ListToDo *listToDo) //la funzione mi permette di eliminare una checklist
 {
     mListToDos.removeOne(listToDo);
     ui->listToDosLayout->removeWidget(listToDo);
@@ -101,12 +101,12 @@ void MainWindow::on_Save_clicked()
             qDebug() << mListToDos.size();
             //qDebug() << mListToDos;
             // fare cicli per listtodo e sottocicli per task
-            stream << mListToDos.size() <<endl;
+            stream << mListToDos.size() <<endl; // flusso sul file
 
             for (auto t : mListToDos)
             {
 
-                // qDebug()<< t;   //puntatore a ListToDo
+
                 qDebug() << t->name();  //nome ListToDo
                 stream << t->name() <<endl;
 
@@ -132,7 +132,7 @@ void MainWindow::on_Save_clicked()
 
             }
 
-            file.flush();
+            file.flush(); //svuota il buffer
             file.close();
         }
         else {
@@ -155,7 +155,7 @@ void MainWindow::on_OpenFile_clicked()
             return;
         }
         QTextStream stream(&file);
-        int nl= stream.readLine().toInt(); // numero listodo
+        int nl= stream.readLine().toInt(); // nl=numero listodo
         qDebug()<< nl<< endl;
         for (int n=0; n<nl; n++)
         {

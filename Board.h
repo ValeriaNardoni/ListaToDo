@@ -30,6 +30,8 @@ private slots:
     void updateStatus();
     void removeTask(Task*task);
     void taskstatusChanged(Task *task);
+    void closeEvent (QCloseEvent *event);
+
 
 
 

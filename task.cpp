@@ -96,7 +96,7 @@ void Task::setImportant()
 void Task::on_Important_clicked()
 {
     Task::Important=true;
-    QPixmap pix("/home/valeria/Scrivania/Esame Programmazione Lista ToDo/stella.png");
+    QPixmap pix("/home/valeria/Scrivania/ProgettoListaToDo-master(6)/ProgettoListaToDo-master/stella.png");
     tui->label_pic-> setPixmap(pix.scaled(15,15,Qt::KeepAspectRatio));
 
     QPalette palette = tui->checkbox->palette();
@@ -122,3 +122,4 @@ bool Task::isImportant() const
    return (this->Important);
     //return tui->checkbox->palette();
 }
+

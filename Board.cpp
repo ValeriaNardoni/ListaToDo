@@ -6,6 +6,7 @@
 #include <task.h>
 #include <QDebug>
 #include <QScrollArea>
+#include <QtWidgets/QtWidgets>
 
 Board::Board(QVector<Task*> pTask, QWidget *parent) :
         QDialog(parent),
@@ -120,4 +121,20 @@ void Board::updateStatus()
             QString("Status: %1 todo / %2 completed")
                     .arg(todoCount)
                     .arg(completedCount));
+}
+
+
+
+
+
+void Board::closeEvent (QCloseEvent *event){
+
+   int ret = QMessageBox::question(this,"Attention","Do you want to save your work before leaving?\n",
+   QMessageBox::Save,QMessageBox::Cancel);
+    if(ret == QMessageBox::Save)
+            emit TaskSaved(lTask);
+
+        // QMessageBox::information(this,"Attention","You pressed Save");
+
+   // else QMessageBox::information(this,"Attention","You pressed Cancel");
 }

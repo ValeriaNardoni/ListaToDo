@@ -4,6 +4,7 @@
 #include <QFont>
 #include <Board.h>
 #include <QApplication>
+#include <QtWidgets/QFileDialog>
 
 
 ListToDo::ListToDo(const QString &name, QWidget *parent) :
@@ -97,7 +98,6 @@ void ListToDo::on_checkbox_clicked()
     board->setModal(true);
 
    connect(board, &Board::TaskSaved, this, &ListToDo::saveTask  );
-
 
     board->exec();
 }
