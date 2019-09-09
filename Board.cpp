@@ -51,7 +51,7 @@ Board::~Board()
 
 void Board::copypTask(QVector<Task*> pTask)
 {
-   lTask=pTask;
+   lTask=pTask; //ptask variabile di passaggio mTask al ltask
 }
 
 

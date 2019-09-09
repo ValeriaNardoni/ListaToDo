@@ -22,7 +22,7 @@ ListToDo::ListToDo(const QString &name, QWidget *parent) :
                 emit removed(this);
             });
 
-    connect(cui->checkbox, &QPushButton::toggled, this, &ListToDo::checked);
+
     //  qDebug() << this;
     //  qDebug() << this->name();
 
@@ -51,7 +51,8 @@ void ListToDo::setName(const QString &name)
     cui->checkbox->setText(name);
 }
 
-QString ListToDo::name() const
+QString ListToDo::name() const  //return name perchè le variabili sono private,stessa cosa per retTask.Ho bisogno delle funzioni
+
 {
     return cui->checkbox->text();
 }
@@ -78,17 +79,7 @@ void ListToDo::rename()
     }
 }
 
-void ListToDo::checked(bool checked)
-{
 
-    QFont font(cui->checkbox->font());
-
-    font.setStrikeOut(checked);
-
-    cui->checkbox->setFont(font);
-
-    emit statusChanged(this);
-}
 
 
 void ListToDo::on_checkbox_clicked()

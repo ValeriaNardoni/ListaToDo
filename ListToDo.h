@@ -35,7 +35,7 @@ signals:
     void removed(ListToDo *listToDo);
     void statusChanged(ListToDo *listToDo);
 private slots:
-    void checked(bool checked);
+
     void on_checkbox_clicked();
 private:
     Ui::ListToDo *cui;

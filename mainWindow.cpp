@@ -61,7 +61,7 @@ void MainWindow::removeListToDo(ListToDo *listToDo) //la funzione mi permette di
     mListToDos.removeOne(listToDo);
     ui->listToDosLayout->removeWidget(listToDo);
 
-    listToDo->setParent(0);
+    //listToDo->setParent(0);
     delete listToDo;
     updateStatus();
 }
@@ -73,19 +73,13 @@ void MainWindow::listToDoStatusChanged(ListToDo *listToDo)
 
 void MainWindow::updateStatus()
 {
-    int completedCount = 0;
 
-    for (auto t : mListToDos) {
-        if (t->isCompleted()) {
-            completedCount++;
-        }
-    }
-    int todoCount = mListToDos.size() - completedCount;
+    int todoCount = mListToDos.size() ;
 
     ui->statusLabel->setText(
             QString("Status: %1 Checklist ")
                     .arg(todoCount)
-                    .arg(completedCount));
+                    );
 }
 
 void MainWindow::on_Save_clicked()
