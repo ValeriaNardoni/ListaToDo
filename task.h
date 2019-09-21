@@ -39,7 +39,7 @@ signals:
 private slots:
     void checked(bool checked);
 void on_Important_clicked();
-void on_NotImportant_clicked();
+
 
 
 

@@ -26,6 +26,7 @@ public slots:
 private slots:
     void on_Save_clicked();
     void on_OpenFile_clicked();
+    void on_searchButton_clicked();
 
 
 private:

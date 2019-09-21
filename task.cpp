@@ -105,16 +105,7 @@ void Task::on_Important_clicked()
 
     }
 
-void Task::on_NotImportant_clicked()
-{
-    Task::Important=false;
-    QPixmap pix("");
-    tui->label_pic-> setPixmap(pix.scaled(15,15,Qt::KeepAspectRatio));
-    QPalette palette = tui->checkbox->palette();
-    palette.setColor(tui->checkbox->foregroundRole(), Qt::black);
-    tui->checkbox->setPalette(palette);
 
-}
 
 bool Task::isImportant() const
 {

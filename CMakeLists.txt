@@ -25,7 +25,8 @@ add_executable(Esame_Programmazione_Lista_ToDo
         mainWindow.ui
         ListToDo.cpp
         ListToDo.h
-        ListToDo.ui Board.cpp Board.h task.cpp task.h)
+        ListToDo.ui Board.cpp Board.h task.cpp task.h
+        )
 
 # specify which libraries to connect
 target_link_libraries(${PROJECT_NAME} Qt5::Core)

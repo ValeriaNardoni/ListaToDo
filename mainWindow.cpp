@@ -135,6 +135,18 @@ void MainWindow::on_Save_clicked()
         }
     }
 };
+
+
+void MainWindow::on_searchButton_clicked()
+{   bool ok;
+    QString name = QInputDialog::getText(this,
+                                         tr("Search listToDo"),
+                                         tr("ListToDo name"),
+                                         QLineEdit::Normal,
+                                         tr("Untitled listToDo"), &ok);
+}
+
+
 void MainWindow::on_OpenFile_clicked()
 {
 

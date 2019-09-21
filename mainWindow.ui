@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>637</width>
+    <width>580</width>
     <height>349</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
       <item>
        <widget class="QLabel" name="statusLabel">
         <property name="text">
-         <string>Status: 0 Checklist</string>
+         <string>Status: 1 Checklist</string>
         </property>
        </widget>
       </item>
@@ -45,6 +45,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="searchButton">
+        <property name="text">
+         <string>Search</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="OpenFile">
         <property name="text">
          <string>Open File</string>
@@ -61,13 +68,37 @@
      </layout>
     </item>
     <item>
-     <widget class="QToolBox" name="">
-      <widget class="QWidget" name="Page1" native="true">
+     <widget class="QToolBox" name="toolBox">
+      <widget class="QWidget" name="Page1">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>562</width>
+         <height>236</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string/>
        </attribute>
        <layout class="QVBoxLayout" name="listToDosLayout"/>
       </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="importantButton">
+      <property name="font">
+       <font>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:red;
+       </string>
+      </property>
+      <property name="text">
+       <string>Important Tasks</string>
+      </property>
      </widget>
     </item>
    </layout>
