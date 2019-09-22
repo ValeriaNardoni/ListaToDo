@@ -38,12 +38,12 @@ signals:
     void statusChanged(Task *task);
 private slots:
     void checked(bool checked);
-void on_Important_clicked();
-
-
+    void on_Important_clicked();
+    void on_NotImportant_clicked();
 
 
 private:
+    QString controlladata(QString data1,QString data2);
     Ui::Task *tui;
     bool Important;
 };

@@ -59,27 +59,50 @@ void Board::on_Board_accepted()
 {
 
 }
+
+QString Board::controlladata(QString data1,QString data2) // data da controllare. data in caso di errore
+{
+    QDate datacont = QDate::fromString(data1,"dd/MM/yyyy" ); // trasforma la stringa ingresso in QDate
+    if (datacont.isValid( datacont.year(), datacont.month(), datacont.day() )) return data1;
+    return data2;
+}
+
 void Board::on_addTaskButton_clicked()
 {
 
     bool ok;
 
 
-    QString name = QInputDialog::getText(this,
-                                         tr("Add task"),
-                                         tr("Task name"),
-                                         QLineEdit::Normal,
-                                         tr("Untitled task"), &ok);
+    QString name1 = QInputDialog::getText(this,
+                                          tr("Add task name"),
+                                          tr("Task name"),
+                                          QLineEdit::Normal,
+                                          tr("Untitled task"),
+                                          &ok);
 
-    if (ok && !name.isEmpty()) {
-        qDebug() << "Adding new task";
-        Task *task = new Task(name);
-        connect(task, &Task::removed, this, &Board::removeTask);
-        connect(task, &Task::statusChanged, this, &Board::taskstatusChanged);
-        lTask.append(task);
+    if (ok && !name1.isEmpty()) {
+        QDate data1 = QDate::currentDate();
+        QString name2o=data1.toString("dd/MM/yyyy");
 
-        bui->TaskLayout->addWidget(task);
-        updateStatus();
+        QString name2 = QInputDialog::getText(this,
+                                      tr("Add task date"),
+                                      tr("Date dd/mm/yyyy"),
+                                      QLineEdit::Normal,
+                                      tr(name2o.toLatin1().data()),
+                                      &ok);
+
+        if (ok && !name2.isEmpty()) {
+            QString name = name1 + " " + controlladata(name2, name2o);
+            qDebug() << "Adding new task";
+
+            Task *task = new Task(name);
+            connect(task, &Task::removed, this, &Board::removeTask);
+            connect(task, &Task::statusChanged, this, &Board::taskstatusChanged);
+            lTask.append(task);
+
+            bui->TaskLayout->addWidget(task);
+            updateStatus();
+        }
     }
 
 

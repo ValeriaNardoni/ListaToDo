@@ -9,6 +9,7 @@ namespace Ui {
     class ListToDo;
     class Board;
     class Task;
+    class Important;
 }
 
 class Board : public QDialog
@@ -17,7 +18,7 @@ Q_OBJECT
 
 public:
     explicit Board(QVector<Task*> pTask, QWidget *parent = 0);
-
+    QString controlladata(QString data1,QString data2);
 
     ~Board();
 

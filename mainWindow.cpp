@@ -5,6 +5,8 @@
 #include <QtWidgets/QFileDialog>
 #include <QTextStream>
 #include <QtWidgets/QMessageBox>
+#include <Important.h>
+#include <ui_Important.h>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -135,6 +137,15 @@ void MainWindow::on_Save_clicked()
         }
     }
 };
+
+void MainWindow::on_importantButton_clicked()
+{
+    qDebug()<< "IMPORTANT WINDOW";
+    Important *important = new Important(mListToDos);
+
+    important->setModal(true);
+    important->exec();
+}
 
 
 void MainWindow::on_searchButton_clicked()

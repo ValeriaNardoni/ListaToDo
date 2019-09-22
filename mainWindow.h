@@ -4,9 +4,11 @@
 #include <QVector>
 #include <QMainWindow>
 #include "ListToDo.h"
+#include "Important.h"
 
 namespace Ui {
     class MainWindow;
+    class Important;
 }
 
 
@@ -27,7 +29,7 @@ private slots:
     void on_Save_clicked();
     void on_OpenFile_clicked();
     void on_searchButton_clicked();
-
+    void on_importantButton_clicked();
 
 private:
     Ui::MainWindow *ui;

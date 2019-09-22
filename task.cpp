@@ -1,6 +1,7 @@
 #include "task.h"
 #include "ui_task.h"
 #include <QInputDialog>
+#include <QDate>
 #include <QFont>
 #include <Board.h>
 #include <stdio.h>
@@ -55,15 +56,38 @@ bool Task::isCompleted() const
     return tui->checkbox->isChecked();
 }
 
+QString Task::controlladata(QString data1,QString data2) // data da controllare. data in caso di errore
+{
+    QDate datacont = QDate::fromString(data1,"dd/MM/yyyy" ); // trasforma la stringa ingresso in QDate
+    if (datacont.isValid( datacont.year(), datacont.month(), datacont.day() )) return data1;
+    return data2;
+}
+
+
 void Task::rename()
 {
     bool ok;
-    QString value = QInputDialog::getText(this, tr("Edit task"),
+    QString name  = this->name();
+    qDebug() << "RENAME " + name;
+    QString name1o = name.left(name.length()-11);
+    qDebug() << "TASK " + name1o;
+    QString name2o = name.right(10);
+    qDebug() << "DATA " + name2o;
+    QString name1 = QInputDialog::getText(this, tr("Edit task"),
                                           tr("Task name"),
                                           QLineEdit::Normal,
-                                          this->name(), &ok);
-    if (ok && !value.isEmpty()) {
-        setName(value);
+                                          name1o, &ok);
+    if (ok && !name1.isEmpty()) {
+        QString name2 = QInputDialog::getText(this,
+                                              tr("Add task date"),
+                                              tr("Date dd/mm/yyyy"),
+                                              QLineEdit::Normal,
+                                              name2o,
+                                              &ok);
+
+
+
+        setName(name1+" "+ controlladata(name2, name2o));
     }
 }
 
@@ -96,7 +120,7 @@ void Task::setImportant()
 void Task::on_Important_clicked()
 {
     Task::Important=true;
-    QPixmap pix("/home/valeria/Scrivania/ProgettoListaToDo-master(6)/ProgettoListaToDo-master/stella.png");
+    QPixmap pix("/home/valeria/Scrivania/ListaToDo-master/stella.png");
     tui->label_pic-> setPixmap(pix.scaled(15,15,Qt::KeepAspectRatio));
 
     QPalette palette = tui->checkbox->palette();
@@ -105,7 +129,16 @@ void Task::on_Important_clicked()
 
     }
 
+void Task::on_NotImportant_clicked()
+{
 
+    QPixmap pix("");
+    tui->label_pic-> setPixmap(pix.scaled(15,15,Qt::KeepAspectRatio));
+    QPalette palette = tui->checkbox->palette();
+    palette.setColor(tui->checkbox->foregroundRole(), Qt::black);
+    tui->checkbox->setPalette(palette);
+
+}
 
 bool Task::isImportant() const
 {
