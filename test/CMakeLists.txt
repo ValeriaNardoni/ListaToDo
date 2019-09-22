@@ -29,9 +29,14 @@ add_executable(TEST_Lista_ToDo
         ../ListToDo.ui
         ../Board.cpp
         ../Board.h
+        ../Board.ui
         ../task.cpp
         ../task.h
-        Test.cpp)
+        ../task.ui
+        Test.cpp
+        ../Important.cpp
+        ../Important.h
+        ../Important.ui)
 
 # specify which libraries to connect
 target_link_libraries(TEST_Lista_ToDo Qt5::Core)
