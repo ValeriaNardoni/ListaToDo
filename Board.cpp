@@ -8,7 +8,7 @@
 #include <QScrollArea>
 #include <QtWidgets/QtWidgets>
 
-Board::Board(QVector<Task*> pTask, QWidget *parent) :
+Board::Board(QVector<Task*> pTask, QString title, QWidget *parent) :
         QDialog(parent),
         bui(new Ui::Board),
         lTask()
@@ -23,7 +23,9 @@ Board::Board(QVector<Task*> pTask, QWidget *parent) :
                 connect(t, &Task::statusChanged, this, &Board::taskstatusChanged);
 
             }
-     bui->TaskLayout->activate()    ;
+
+    this->setWindowTitle(title);
+    bui->TaskLayout->activate()    ;
 
             updateStatus();
 
@@ -41,7 +43,7 @@ Board::Board(QVector<Task*> pTask, QWidget *parent) :
 
             });
 
-
+    //connect(bui, TaskSaved(lTask), parent, &MainWindow::ContaImp);
 }
 
 Board::~Board()

@@ -25,7 +25,7 @@ signals:
 
 
 private slots:
-
+    int updateStatus(QVector<ListToDo*> mListToDosI);
 
 private:
     Ui::Important *iui;

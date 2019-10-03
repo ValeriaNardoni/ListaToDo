@@ -21,14 +21,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
-    <widget class="QPushButton" name="editButton">
-     <property name="text">
-      <string>Edit</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
+   <item row="0" column="1">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -41,17 +34,17 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="4">
+   <item row="0" column="3">
     <widget class="QPushButton" name="removeButton">
      <property name="text">
       <string>Remove</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="statlist">
+   <item row="0" column="2">
+    <widget class="QPushButton" name="editButton">
      <property name="text">
-      <string>0 todo / 0 compl.</string>
+      <string>Edit</string>
      </property>
     </widget>
    </item>

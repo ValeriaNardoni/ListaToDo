@@ -5,6 +5,7 @@
 #include <ListToDo.h>
 #include <task.h>
 
+
 namespace Ui {
     class ListToDo;
     class Board;
@@ -17,7 +18,7 @@ class Board : public QDialog
 Q_OBJECT
 
 public:
-    explicit Board(QVector<Task*> pTask, QWidget *parent = 0);
+    explicit Board(QVector<Task*> pTask, QString title,  QWidget *parent = 0);
     QString controlladata(QString data1,QString data2);
 
     ~Board();

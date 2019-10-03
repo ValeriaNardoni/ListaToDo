@@ -42,7 +42,10 @@ void ListToDo::saveTask(QVector<Task*> lTask) //salva lTask su mtask
     qDebug() << "Salvataggio task - segnale ricevuto";
    //
     mTask=lTask;
+    emit cambioImp(this);
+    qDebug() << "EMESSO cambioImp";
     qDebug() << "nuovo valore mTask" << mTask;
+    //connect(cui, &ListToDo::cambioImp, ui ,&MainWindow::ContaImp);
 }
 
 
@@ -79,18 +82,29 @@ void ListToDo::rename()
     }
 }
 
-
+void ListToDo::updatestat(const QString &textstat)
+{
+    cui->statlist->setText(textstat);
+}
 
 
 void ListToDo::on_checkbox_clicked()
 {
-    Board *board = new Board(mTask);
+
+    Board *board = new Board(mTask, cui->checkbox->text());
     //Board Board(mTask); //mTask
+    qDebug() << cui->checkbox->text();
     board->setModal(true);
 
    connect(board, &Board::TaskSaved, this, &ListToDo::saveTask  );
 
     board->exec();
+}
+
+void ListToDo::aprifinestra(ListToDo* t)
+{
+    //t->cui->checkbox->setFocus();
+    t->on_checkbox_clicked();
 }
 
 void ListToDo::addTask( Task *task)

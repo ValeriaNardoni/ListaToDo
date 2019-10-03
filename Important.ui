@@ -11,7 +11,7 @@
             </rect>
         </property>
         <property name="windowTitle">
-            <string>Important Tasks</string>
+            <string>Task</string>
         </property>
         <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
@@ -28,7 +28,7 @@
                         <item>
                             <widget class="QLabel" name="statusLabel">
                                 <property name="text">
-                                    <string>Status: 0 Important Tasks</string>
+                                    <string>Status: 0 Importants Tasks to do</string>
                                 </property>
                             </widget>
                         </item>
@@ -65,6 +65,13 @@
                                 <property name="sizeConstraint">
                                     <enum>QLayout::SetMaximumSize</enum>
                                 </property>
+                                <item>
+                                <widget class="QTextBrowser" name="label">
+                                <property name="text">
+                                    <string>TextLabel di prova</string>
+                                </property>
+                                </widget>
+                                </item>
                             </layout>
                         </widget>
                     </widget>

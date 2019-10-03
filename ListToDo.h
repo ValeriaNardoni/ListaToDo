@@ -5,6 +5,7 @@
 #include <Board.h>
 #include <task.h>
 
+
 namespace Ui {
     class ListToDo;
     class Board;
@@ -27,13 +28,16 @@ public:
  //   QVector<Task*> pTask;
   //  void saveTask(QVector<Task*> lTask); //salva lTask su mTask
     void addTask(Task *task); // aggiunge un task a mTask
+    void updatestat(const QString &textstat);
 public slots:
     void rename();
     void saveTask(QVector<Task*> lTask); //salva lTask su mTask
+    void aprifinestra(ListToDo *listToDo);
 
 signals:
     void removed(ListToDo *listToDo);
     void statusChanged(ListToDo *listToDo);
+    void cambioImp(ListToDo *listToDo);
 private slots:
 
     void on_checkbox_clicked();
