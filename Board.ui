@@ -53,6 +53,13 @@
                             </widget>
                         </item>
                         <item>
+                            <widget class="QPushButton" name="searchTaskButton">
+                                <property name="text">
+                                    <string>Search Task</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
                             <widget class="QPushButton" name="SaveTask">
                                 <property name="text">
                                     <string>Save</string>

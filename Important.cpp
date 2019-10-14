@@ -40,24 +40,24 @@ int Important::updateStatus(QVector<ListToDo*> mListToDosI)
     QString Ilist="";
     QString Itask="";
     QString IImpo="";
-    qDebug() << mListToDosI.size();
+    //qDebug() << mListToDosI.size();
     for (auto t : mListToDosI) {
         Ilist= t->name();
 
-        qDebug() << t->name();  //nome ListToDo
+        //qDebug() << t->name();  //nome ListToDo
 
 
-        qDebug() << t->retTask().size();  // numero di task della lista
+        //qDebug() << t->retTask().size();  // numero di task della lista
 
 
         // qDebug()<< t->retTask(); // Puntatori ai Task
         for (auto a : t->retTask()) {
             Itask = a->name();
-            qDebug() << a->name(); // nome task
+            //qDebug() << a->name(); // nome task
 
-            qDebug() << a->isCompleted(); // task completato
+            //qDebug() << a->isCompleted(); // task completato
 
-            qDebug() << a->isImportant();
+            //qDebug() << a->isImportant();
             if (a->isImportant() && !a->isCompleted()){
                 importantCount ++;
                 IImpo= IImpo + Ilist + " " + Itask + "\n";
@@ -65,7 +65,7 @@ int Important::updateStatus(QVector<ListToDo*> mListToDosI)
         }
 
     }
-    qDebug() << IImpo;
+    //qDebug() << IImpo;
     iui->label->setText(IImpo);
     return importantCount;
 

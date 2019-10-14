@@ -34,12 +34,12 @@ Board::Board(QVector<Task*> pTask, QString title, QWidget *parent) :
 
 
 
-    qDebug() << parent;
+    //qDebug() << parent;
     connect(bui->SaveTask, &QPushButton::clicked,
             [this] {
                 emit TaskSaved(lTask);
-                qDebug() << "emesso segnale" << lTask;
-                qDebug() << this;
+                //qDebug() << "emesso segnale" << lTask;
+                //qDebug() << this;
 
             });
 
@@ -95,9 +95,10 @@ void Board::on_addTaskButton_clicked()
 
         if (ok && !name2.isEmpty()) {
             QString name = name1 + " " + controlladata(name2, name2o);
-            qDebug() << "Adding new task";
+            //qDebug() << "Adding new task";
 
             Task *task = new Task(name);
+
             connect(task, &Task::removed, this, &Board::removeTask);
             connect(task, &Task::statusChanged, this, &Board::taskstatusChanged);
             lTask.append(task);
@@ -110,8 +111,133 @@ void Board::on_addTaskButton_clicked()
 
 }
 
+int Board::on_searchTaskButton_clicked()
+{
+ // qDebug() << "premuto searchTaskButton";
+ bool ok;
+ QString searchtxt = QInputDialog::getText(this,
+                                              tr("Search Task"),
+                                              tr("Task name"),
+                                              QLineEdit::Normal,
+                                              tr("Untitled task"), &ok);
+ int found=0;
+    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX salva il file ordinato su disco
+
+    QString nomeFile = "TMPINTT.LTD";
+    if (nomeFile != "") {
+        QFile file(nomeFile);
+
+        if (file.open(QIODevice::ReadWrite)) {
+            QTextStream stream(&file);
+            //qDebug() << "save file";
+            //qDebug() << lTask.size();
+            stream << lTask.size() <<endl; // flusso sul file
+            for (auto t : lTask)
+            {   if ((t->name()).contains(searchtxt, Qt::CaseInsensitive))
+                {
+                    found++;
+                    //qDebug() << "va bene " + t->name();  //nome ListToDo
+                    stream << t->name() <<endl;
+                    stream << t->isCompleted() <<endl;
+                    stream << t->isImportant() <<endl;
+
+                }
+
+            }
+            for (auto t : lTask)
+            {
+                if (!(t->name()).contains(searchtxt, Qt::CaseInsensitive))
+                {
+                    //qDebug() << "non va bene " + t->name();  //nome ListToDo
+                    stream << t->name() <<endl;
+                    stream << t->isCompleted() <<endl;
+                    stream << t->isImportant() <<endl;
+                }
 
 
+
+            }
+
+            file.flush(); //svuota il buffer
+            file.close();
+        }
+        else {
+            QMessageBox::critical(this, tr("Errore"), tr("Non posso salvare il file"));
+            return 0;
+        }
+    }
+
+    if (found==0){
+        QMessageBox::critical(0, tr("Alert"), tr("Task not found.\n"), QMessageBox::Ok);
+        //qDebug() << "NOT FOUND";
+
+    }
+
+ delAllTask(); // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx cancella tutte le task
+
+ //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ricarica da disco il file ordinato
+    if (nomeFile != "")
+    {
+        QFile file(nomeFile);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            QMessageBox::critical(this, tr("Error"),
+                                  tr("Could not open file"));
+            return 0;
+        }
+        QTextStream stream(&file);
+        int nt= stream.readLine().toInt(); // nl=numero listodo
+        //qDebug()<< "letto numero Task " <<nt;
+        for (int n=0; n<nt; n++) //inserisce task
+            {
+
+                QString nameTask = stream.readLine();
+                Task *task = new Task(nameTask);
+                lTask.append(task);
+                bui->TaskLayout->addWidget(lTask[n]);
+                connect(lTask[n], &Task::removed, this, &Board::removeTask);
+                connect(lTask[n], &Task::statusChanged, this, &Board::taskstatusChanged);
+
+                QString Tfatto = stream.readLine();
+
+                if (Tfatto=="1")
+                {
+                    task->setCompleted();
+                }
+
+                QString Timp = stream.readLine();
+
+                if (Timp=="1")
+                {
+                    task->setImportant();
+                }
+
+
+            }
+        bui->TaskLayout->activate();
+
+
+
+
+        file.close();
+    }
+
+    updateStatus();
+    return found;
+
+
+
+};
+
+void Board::delAllTask() {
+    int size = lTask.size();
+    if (size != 0) {
+        for (int n = 0; n < size;n++)
+        {
+            removeTask(lTask[0]);
+        }
+    }
+}
 
 void Board::removeTask(Task*task)
 {

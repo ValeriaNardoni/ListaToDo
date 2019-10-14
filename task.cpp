@@ -68,11 +68,11 @@ void Task::rename()
 {
     bool ok;
     QString name  = this->name();
-    qDebug() << "RENAME " + name;
+    //qDebug() << "RENAME " + name;
     QString name1o = name.left(name.length()-11);
-    qDebug() << "TASK " + name1o;
+    //qDebug() << "TASK " + name1o;
     QString name2o = name.right(10);
-    qDebug() << "DATA " + name2o;
+    //qDebug() << "DATA " + name2o;
     QString name1 = QInputDialog::getText(this, tr("Edit task"),
                                           tr("Task name"),
                                           QLineEdit::Normal,
@@ -120,7 +120,7 @@ void Task::setImportant()
 void Task::on_Important_clicked()
 {
     Task::Important=true;
-    QPixmap pix("/home/valeria/Scrivania/ListaToDo-master/stella.png");
+    QPixmap pix("/home/valeria/Scrivania/04.10.19b/ListaToDo-master/stella.png");
     tui->label_pic-> setPixmap(pix.scaled(15,15,Qt::KeepAspectRatio));
 
     QPalette palette = tui->checkbox->palette();
@@ -131,7 +131,7 @@ void Task::on_Important_clicked()
 
 void Task::on_NotImportant_clicked()
 {
-
+    Task::Important=false;
     QPixmap pix("");
     tui->label_pic-> setPixmap(pix.scaled(15,15,Qt::KeepAspectRatio));
     QPalette palette = tui->checkbox->palette();

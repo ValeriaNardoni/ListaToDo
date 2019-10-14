@@ -39,12 +39,12 @@ ListToDo::~ListToDo()
 
 void ListToDo::saveTask(QVector<Task*> lTask) //salva lTask su mtask
 {
-    qDebug() << "Salvataggio task - segnale ricevuto";
+    //qDebug() << "Salvataggio task - segnale ricevuto";
    //
     mTask=lTask;
     emit cambioImp(this);
-    qDebug() << "EMESSO cambioImp";
-    qDebug() << "nuovo valore mTask" << mTask;
+    //qDebug() << "EMESSO cambioImp";
+    //qDebug() << "nuovo valore mTask" << mTask;
     //connect(cui, &ListToDo::cambioImp, ui ,&MainWindow::ContaImp);
 }
 
@@ -54,7 +54,7 @@ void ListToDo::setName(const QString &name)
     cui->checkbox->setText(name);
 }
 
-QString ListToDo::name() const  //return name perchè le variabili sono private,stessa cosa per retTask.Ho bisogno delle funzioni
+QString ListToDo::name() const //restituisce il nome della lista
 
 {
     return cui->checkbox->text();
@@ -93,7 +93,7 @@ void ListToDo::on_checkbox_clicked()
 
     Board *board = new Board(mTask, cui->checkbox->text());
     //Board Board(mTask); //mTask
-    qDebug() << cui->checkbox->text();
+    //qDebug() << cui->checkbox->text();
     board->setModal(true);
 
    connect(board, &Board::TaskSaved, this, &ListToDo::saveTask  );

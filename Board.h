@@ -20,7 +20,7 @@ Q_OBJECT
 public:
     explicit Board(QVector<Task*> pTask, QString title,  QWidget *parent = 0);
     QString controlladata(QString data1,QString data2);
-
+    void delAllTask();
     ~Board();
 
 signals:
@@ -29,6 +29,7 @@ signals:
 private slots:
     void on_Board_accepted();
     void on_addTaskButton_clicked();
+    int on_searchTaskButton_clicked();
     void updateStatus();
     void removeTask(Task*task);
     void taskstatusChanged(Task *task);
