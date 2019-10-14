@@ -25,6 +25,9 @@ Q_OBJECT
 private slots:
     void TestNameList();
     void TestTestCompleted();
+    void TestTestCompleted1();
+    void TestContaImp();
+    void TestSearchList();
 };
 
 void Test::TestNameList()
@@ -40,11 +43,40 @@ void Test::TestTestCompleted()
     // ListToDo *listToDo = new ListToDo("TestNameList");
     Task *task = new Task("nameTask");
     QCOMPARE( task->isCompleted(), 0);
+
+
+}
+
+void Test::TestTestCompleted1()
+{
+    // ListToDo *listToDo = new ListToDo("TestNameList");
+    Task *task = new Task("nameTask");
     task->setCompleted();
     QCOMPARE( task->isCompleted(), 1);
 
 }
 
+
+void Test::TestContaImp()
+{
+    MainWindow w;
+    //ListToDo *listToDo = new ListToDo("TestNameList");
+    w.addListToDoTest("TestNameList");
+    QCOMPARE( w.ContaImp(), 0);
+    w.caricaTest();
+    QCOMPARE( w.ContaImp(), 1);
+
+}
+
+void Test::TestSearchList()
+{
+    MainWindow w;
+    w.caricaTest();
+    //QCOMPARE( w.searchList("pippo"), 0);
+    QCOMPARE( w.searchList("test"), 1);
+
+
+}
 
 QTEST_MAIN(Test)
 #include "Test.moc"
