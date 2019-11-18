@@ -27,7 +27,12 @@ private slots:
     void TestTestCompleted();
     void TestTestCompleted1();
     void TestContaImp();
+    void TestContaImp1();
+    void TestContaImp2();
     void TestSearchList();
+    void TestSearchList1();
+    void TestSearchList2();
+
 };
 
 void Test::TestNameList()
@@ -63,19 +68,58 @@ void Test::TestContaImp()
     //ListToDo *listToDo = new ListToDo("TestNameList");
     w.addListToDoTest("TestNameList");
     QCOMPARE( w.ContaImp(), 0);
-    w.caricaTest();
+
+}
+
+void Test::TestContaImp1()
+{
+    MainWindow w;
+    //ListToDo *listToDo = new ListToDo("TestNameList");
+    w.addListToDoTest("TestNameList");
+    w.caricaTest("TESTNONTOCCARE");
     QCOMPARE( w.ContaImp(), 1);
 
 }
 
+void Test::TestContaImp2()
+{
+    MainWindow w;
+    //ListToDo *listToDo = new ListToDo("TestNameList");
+    w.addListToDoTest("TestNameList");
+    w.caricaTest("TESTNONTOCCARE");
+    w.caricaTest("TESTNONTOCCARE2");
+    QCOMPARE( w.ContaImp(), 6);
+}
+
+
+
+
 void Test::TestSearchList()
 {
     MainWindow w;
-    w.caricaTest();
+    w.caricaTest("TESTNONTOCCARE");
+    w.caricaTest("TESTNONTOCCARE2");
+    QCOMPARE( w.searchList("pippo"), 0);
+
+}
+
+void Test::TestSearchList1()
+{
+    MainWindow w;
+    w.caricaTest("TESTNONTOCCARE");
     //QCOMPARE( w.searchList("pippo"), 0);
     QCOMPARE( w.searchList("test"), 1);
+}
 
 
+
+void Test::TestSearchList2()
+{
+    MainWindow w;
+    w.caricaTest("TESTNONTOCCARE");
+    w.caricaTest("TESTNONTOCCARE2");
+    //QCOMPARE( w.searchList("pippo"), 0);
+    QCOMPARE( w.searchList("test"), 3);
 }
 
 QTEST_MAIN(Test)
