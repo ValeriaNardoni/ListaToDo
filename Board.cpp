@@ -35,13 +35,13 @@ Board::Board(QVector<Task*> pTask, QString title, QWidget *parent) :
 
 
     //qDebug() << parent;
-    connect(bui->SaveTask, &QPushButton::clicked,
-            [this] {
-                emit TaskSaved(lTask);
-                //qDebug() << "emesso segnale" << lTask;
-                //qDebug() << this;
-
-            });
+//    connect(bui->SaveTask, &QPushButton::clicked,
+//            [this] {
+//                emit TaskSaved(lTask);
+//                //qDebug() << "emesso segnale" << lTask;
+//                //qDebug() << this;
+//
+//            });
 
     //connect(bui, TaskSaved(lTask), parent, &MainWindow::ContaImp);
 }
@@ -270,7 +270,7 @@ void Board::updateStatus()
 
     bui->statusLabel->setText(
             QString("Status: %1 todo / %2 completed")
-                    .arg(todoCount)
+                    .arg(lTask.size())
                     .arg(completedCount));
 }
 
@@ -280,9 +280,9 @@ void Board::updateStatus()
 
 void Board::closeEvent (QCloseEvent *event){
 
-   int ret = QMessageBox::question(this,"Attention","Do you want to save your work before leaving?\n",
-   QMessageBox::Save,QMessageBox::Cancel);
-    if(ret == QMessageBox::Save)
+//   int ret = QMessageBox::question(this,"Attention","Do you want to save your work before leaving?\n",
+//   QMessageBox::Save,QMessageBox::Cancel);
+//    if(ret == QMessageBox::Save)
             emit TaskSaved(lTask);
 
         // QMessageBox::information(this,"Attention","You pressed Save");

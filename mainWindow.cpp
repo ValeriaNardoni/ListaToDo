@@ -197,7 +197,12 @@ void MainWindow::on_importantButton_clicked()
 }
 
 int MainWindow::on_searchButton_clicked(){
-    searchList(inputSearch());
+    if ( searchList(inputSearch())==0){
+        QMessageBox::critical(0, tr("Alert"), tr("List not found.\n"), QMessageBox::Ok);
+        //qDebug() << "NOT FOUND";
+
+    }
+
 }
 
 QString MainWindow::inputSearch(){
@@ -207,7 +212,7 @@ QString MainWindow::inputSearch(){
                                               tr("ListToDo name"),
                                               QLineEdit::Normal,
                                               tr("Untitled listToDo"), &ok);
-    return searchtxt; // restiusce una Qstring
+    return searchtxt;
 }
 
 int MainWindow::searchList(QString searchtxt)
@@ -269,11 +274,11 @@ int MainWindow::searchList(QString searchtxt)
         }
     }
 
-    if (found==0){
-        QMessageBox::critical(0, tr("Alert"), tr("List not found.\n"), QMessageBox::Ok);
+   // if (found==0){
+   //     QMessageBox::critical(0, tr("Alert"), tr("List not found.\n"), QMessageBox::Ok);
         //qDebug() << "NOT FOUND";
 
-    }
+   // }
 
     delAllList(); // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx cancella tutte le liste
 
@@ -343,7 +348,7 @@ void MainWindow::delAllList() {
     if (size != 0) {
         for (int n = 0; n < size;n++)
         {
-            removeListToDo(mListToDos[0]); //cancella lista[0] n volte
+            removeListToDo(mListToDos[0]);
         }
     }
 }
@@ -439,10 +444,10 @@ ContaImp();
 
 }
 
-void MainWindow::caricaTest()
+void MainWindow::caricaTest(QString nometest)
 {
 
-    QString fileName = "TESTNONTOCCARE";
+    QString fileName = nometest;
 
     if (fileName != "") {
         QFile file(fileName);

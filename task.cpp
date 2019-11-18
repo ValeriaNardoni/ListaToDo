@@ -120,7 +120,7 @@ void Task::setImportant()
 void Task::on_Important_clicked()
 {
     Task::Important=true;
-    QPixmap pix("/home/valeria/Scrivania/04.10.19b/ListaToDo-master/stella.png");
+    QPixmap pix("/home/valeria/Scrivania/03.11.19.b/ListaToDo-master/stella.png");
     tui->label_pic-> setPixmap(pix.scaled(15,15,Qt::KeepAspectRatio));
 
     QPalette palette = tui->checkbox->palette();

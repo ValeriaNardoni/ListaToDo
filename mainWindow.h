@@ -21,8 +21,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void updateStatus();
-    void delAllList(); //cancella tutte le liste per ordinarle.
-    void caricaTest();
+    void delAllList();
+    void caricaTest(QString nometest);
     QString inputSearch();
     int searchList(QString text);
 

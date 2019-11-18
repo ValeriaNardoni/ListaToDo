@@ -54,7 +54,7 @@ void ListToDo::setName(const QString &name)
     cui->checkbox->setText(name);
 }
 
-QString ListToDo::name() const //restituisce il nome della lista
+QString ListToDo::name() const  //return name perchè le variabili sono private,stessa cosa per retTask.Ho bisogno delle funzioni
 
 {
     return cui->checkbox->text();
