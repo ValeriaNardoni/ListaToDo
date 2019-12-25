@@ -66,11 +66,11 @@
                                     <enum>QLayout::SetMaximumSize</enum>
                                 </property>
                                 <item>
-                                <widget class="QTextBrowser" name="label">
-                                <property name="text">
-                                    <string>TextLabel di prova</string>
-                                </property>
-                                </widget>
+                                    <widget class="QTextBrowser" name="label">
+                                        <property name="text">
+                                            <string>TextLabel di prova</string>
+                                        </property>
+                                    </widget>
                                 </item>
                             </layout>
                         </widget>

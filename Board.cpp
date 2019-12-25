@@ -8,69 +8,49 @@
 #include <QScrollArea>
 #include <QtWidgets/QtWidgets>
 
-Board::Board(QVector<Task*> pTask, QString title, QWidget *parent) :
+Board::Board(QVector<Task *> pTask, QString title, QWidget *parent) :
         QDialog(parent),
         bui(new Ui::Board),
-        lTask()
-        {
+        lTask() {
     copypTask(pTask);
-   // updateStatus();
-    bui->setupUi(this);
-            for (auto t : lTask)
-            {
-                bui->TaskLayout->addWidget(t);
-                connect(t, &Task::removed, this, &Board::removeTask);
-                connect(t, &Task::statusChanged, this, &Board::taskstatusChanged);
 
-            }
+    bui->setupUi(this);
+    for (auto t : lTask) {
+        bui->TaskLayout->addWidget(t);
+        connect(t, &Task::removed, this, &Board::removeTask);
+        connect(t, &Task::statusChanged, this, &Board::taskstatusChanged);
+
+    }
 
     this->setWindowTitle(title);
-    bui->TaskLayout->activate()    ;
+    bui->TaskLayout->activate();
 
-            updateStatus();
-
-
+    updateStatus();
 
 
-
-
-    //qDebug() << parent;
-//    connect(bui->SaveTask, &QPushButton::clicked,
-//            [this] {
-//                emit TaskSaved(lTask);
-//                //qDebug() << "emesso segnale" << lTask;
-//                //qDebug() << this;
-//
-//            });
-
-    //connect(bui, TaskSaved(lTask), parent, &MainWindow::ContaImp);
 }
 
-Board::~Board()
-{
+Board::~Board() {
     delete bui;
 }
 
-void Board::copypTask(QVector<Task*> pTask)
-{
-   lTask=pTask; //ptask variabile di passaggio mTask al ltask
+void Board::copypTask(QVector<Task *> pTask) {
+    lTask = pTask; //ptask variabile di passaggio mTask al ltask
 }
 
 
-void Board::on_Board_accepted()
-{
+void Board::on_Board_accepted() {
 
 }
 
-QString Board::controlladata(QString data1,QString data2) // data da controllare. data in caso di errore
+QString Board::controlladata(QString data1, QString data2) // data da controllare. data in caso di errore
 {
-    QDate datacont = QDate::fromString(data1,"dd/MM/yyyy" ); // trasforma la stringa ingresso in QDate
-    if (datacont.isValid( datacont.year(), datacont.month(), datacont.day() )) return data1;
+    QDate datacont = QDate::fromString(data1, "dd/MM/yyyy"); // trasforma la stringa ingresso in QDate
+    if (datacont.isValid(datacont.year(), datacont.month(), datacont.day())) return data1;
     return data2;
 }
 
-void Board::on_addTaskButton_clicked()
-{
+void Board::on_addTaskButton_clicked() {
 
     bool ok;
 
@@ -84,18 +64,18 @@ void Board::on_addTaskButton_clicked()
 
     if (ok && !name1.isEmpty()) {
         QDate data1 = QDate::currentDate();
-        QString name2o=data1.toString("dd/MM/yyyy");
+        QString name2o = data1.toString("dd/MM/yyyy");
 
         QString name2 = QInputDialog::getText(this,
-                                      tr("Add task date"),
-                                      tr("Date dd/mm/yyyy"),
-                                      QLineEdit::Normal,
-                                      tr(name2o.toLatin1().data()),
-                                      &ok);
+                                              tr("Add task date"),
+                                              tr("Date dd/mm/yyyy"),
+                                              QLineEdit::Normal,
+                                              tr(name2o.toLatin1().data()),
+                                              &ok);
 
         if (ok && !name2.isEmpty()) {
             QString name = name1 + " " + controlladata(name2, name2o);
-            //qDebug() << "Adding new task";
+
 
             Task *task = new Task(name);
 
@@ -111,17 +91,16 @@ void Board::on_addTaskButton_clicked()
 
 }
 
-int Board::on_searchTaskButton_clicked()
-{
- // qDebug() << "premuto searchTaskButton";
- bool ok;
- QString searchtxt = QInputDialog::getText(this,
+int Board::on_searchTaskButton_clicked() {
+
+    bool ok;
+    QString searchtxt = QInputDialog::getText(this,
                                               tr("Search Task"),
                                               tr("Task name"),
                                               QLineEdit::Normal,
                                               tr("Untitled task"), &ok);
- int found=0;
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX salva il file ordinato su disco
+    int found = 0;
+
 
     QString nomeFile = "TMPINTT.LTD";
     if (nomeFile != "") {
@@ -129,94 +108,79 @@ int Board::on_searchTaskButton_clicked()
 
         if (file.open(QIODevice::ReadWrite)) {
             QTextStream stream(&file);
-            //qDebug() << "save file";
-            //qDebug() << lTask.size();
-            stream << lTask.size() <<endl; // flusso sul file
-            for (auto t : lTask)
-            {   if ((t->name()).contains(searchtxt, Qt::CaseInsensitive))
-                {
+
+            stream << lTask.size() << endl; // flusso sul file
+            for (auto t : lTask) {
+                if ((t->name()).contains(searchtxt, Qt::CaseInsensitive)) {
                     found++;
-                    //qDebug() << "va bene " + t->name();  //nome ListToDo
-                    stream << t->name() <<endl;
-                    stream << t->isCompleted() <<endl;
-                    stream << t->isImportant() <<endl;
+
+                    stream << t->name() << endl;
+                    stream << t->isCompleted() << endl;
+                    stream << t->isImportant() << endl;
 
                 }
 
             }
-            for (auto t : lTask)
-            {
-                if (!(t->name()).contains(searchtxt, Qt::CaseInsensitive))
-                {
-                    //qDebug() << "non va bene " + t->name();  //nome ListToDo
-                    stream << t->name() <<endl;
-                    stream << t->isCompleted() <<endl;
-                    stream << t->isImportant() <<endl;
-                }
+            for (auto t : lTask) {
+                if (!(t->name()).contains(searchtxt, Qt::CaseInsensitive)) {
 
+                    stream << t->name() << endl;
+                    stream << t->isCompleted() << endl;
+                    stream << t->isImportant() << endl;
+                }
 
 
             }
 
             file.flush(); //svuota il buffer
             file.close();
-        }
-        else {
+        } else {
             QMessageBox::critical(this, tr("Errore"), tr("Non posso salvare il file"));
             return 0;
         }
     }
 
-    if (found==0){
+    if (found == 0) {
         QMessageBox::critical(0, tr("Alert"), tr("Task not found.\n"), QMessageBox::Ok);
-        //qDebug() << "NOT FOUND";
+
 
     }
 
- delAllTask(); // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx cancella tutte le task
-
- //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ricarica da disco il file ordinato
-    if (nomeFile != "")
-    {
+    delAllTask();
+    if (nomeFile != "") {
         QFile file(nomeFile);
-        if (!file.open(QIODevice::ReadOnly))
-        {
+        if (!file.open(QIODevice::ReadOnly)) {
             QMessageBox::critical(this, tr("Error"),
                                   tr("Could not open file"));
             return 0;
         }
         QTextStream stream(&file);
-        int nt= stream.readLine().toInt(); // nl=numero listodo
-        //qDebug()<< "letto numero Task " <<nt;
-        for (int n=0; n<nt; n++) //inserisce task
-            {
+        int nt = stream.readLine().toInt(); // nl=numero listodo
+        for (int n = 0; n < nt; n++) //inserisce task
+        {
 
-                QString nameTask = stream.readLine();
-                Task *task = new Task(nameTask);
-                lTask.append(task);
-                bui->TaskLayout->addWidget(lTask[n]);
-                connect(lTask[n], &Task::removed, this, &Board::removeTask);
-                connect(lTask[n], &Task::statusChanged, this, &Board::taskstatusChanged);
+            QString nameTask = stream.readLine();
+            Task *task = new Task(nameTask);
+            lTask.append(task);
+            bui->TaskLayout->addWidget(lTask[n]);
+            connect(lTask[n], &Task::removed, this, &Board::removeTask);
+            connect(lTask[n], &Task::statusChanged, this, &Board::taskstatusChanged);
 
-                QString Tfatto = stream.readLine();
+            QString Tfatto = stream.readLine();
 
-                if (Tfatto=="1")
-                {
-                    task->setCompleted();
-                }
-
-                QString Timp = stream.readLine();
-
-                if (Timp=="1")
-                {
-                    task->setImportant();
-                }
-
-
+            if (Tfatto == "1") {
+                task->setCompleted();
             }
+
+            QString Timp = stream.readLine();
+
+            if (Timp == "1") {
+                task->setImportant();
+            }
+
+
+        }
         bui->TaskLayout->activate();
-
-
 
 
         file.close();
@@ -226,21 +190,18 @@ int Board::on_searchTaskButton_clicked()
     return found;
 
 
-
 };
 
 void Board::delAllTask() {
     int size = lTask.size();
     if (size != 0) {
-        for (int n = 0; n < size;n++)
-        {
+        for (int n = 0; n < size; n++) {
             removeTask(lTask[0]);
         }
     }
 }
 
-void Board::removeTask(Task*task)
-{
+void Board::removeTask(Task *task) {
     lTask.removeOne(task);
     bui->TaskLayout->removeWidget(task);
 
@@ -249,16 +210,12 @@ void Board::removeTask(Task*task)
     updateStatus();
 }
 
-void Board::taskstatusChanged(Task *task)
-{
+void Board::taskstatusChanged(Task *task) {
     updateStatus();
 }
 
 
-
-
-void Board::updateStatus()
-{
+void Board::updateStatus() {
     int completedCount = 0;
 
     for (auto t : lTask) {
@@ -275,17 +232,9 @@ void Board::updateStatus()
 }
 
 
+void Board::closeEvent(QCloseEvent *event) {
+
+    emit TaskSaved(lTask);
 
 
-
-void Board::closeEvent (QCloseEvent *event){
-
-//   int ret = QMessageBox::question(this,"Attention","Do you want to save your work before leaving?\n",
-//   QMessageBox::Save,QMessageBox::Cancel);
-//    if(ret == QMessageBox::Save)
-            emit TaskSaved(lTask);
-
-        // QMessageBox::information(this,"Attention","You pressed Save");
-
-   // else QMessageBox::information(this,"Attention","You pressed Cancel");
 }

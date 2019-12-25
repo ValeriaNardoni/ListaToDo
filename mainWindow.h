@@ -43,7 +43,7 @@ private:
     Ui::MainWindow *ui;
 
     QVector<ListToDo*> mListToDos;
-   // QVector<ListToDo*> mListOrd;
+
 };
 
 #endif // MAINWINDOW_H

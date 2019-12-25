@@ -9,8 +9,7 @@
 
 ListToDo::ListToDo(const QString &name, QWidget *parent) :
         QWidget(parent),
-        cui(new Ui::ListToDo)
-{
+        cui(new Ui::ListToDo) {
     cui->setupUi(this);
     setName(name);
     connect(cui->editButton, &QPushButton::clicked,
@@ -23,55 +22,38 @@ ListToDo::ListToDo(const QString &name, QWidget *parent) :
             });
 
 
-    //  qDebug() << this;
-    //  qDebug() << this->name();
-
-    //  qDebug() << ListToDo::name();
-
-   //connect(Board(mTask), &Board::TaskSaved, this, ListToDo::saveTask(mTask)  ); //////////////////
-
 }
 
-ListToDo::~ListToDo()
-{
+ListToDo::~ListToDo() {
     delete cui;
 }
 
-void ListToDo::saveTask(QVector<Task*> lTask) //salva lTask su mtask
+void ListToDo::saveTask(QVector<Task *> lTask) //salva lTask su mtask
 {
-    //qDebug() << "Salvataggio task - segnale ricevuto";
-   //
-    mTask=lTask;
+
+    mTask = lTask;
     emit cambioImp(this);
-    //qDebug() << "EMESSO cambioImp";
-    //qDebug() << "nuovo valore mTask" << mTask;
-    //connect(cui, &ListToDo::cambioImp, ui ,&MainWindow::ContaImp);
+
 }
 
 
-void ListToDo::setName(const QString &name)
-{
+void ListToDo::setName(const QString &name) {
     cui->checkbox->setText(name);
 }
 
-QString ListToDo::name() const  //return name perchè le variabili sono private,stessa cosa per retTask.Ho bisogno delle funzioni
-
-{
+QString ListToDo::name() const {
     return cui->checkbox->text();
 }
 
-QVector<Task*> ListToDo::retTask() const
-{
-   return mTask;
+QVector<Task *> ListToDo::retTask() const {
+    return mTask;
 }
 
-bool ListToDo::isCompleted() const
-{
+bool ListToDo::isCompleted() const {
     return cui->checkbox->isChecked();
 }
 
-void ListToDo::rename()
-{
+void ListToDo::rename() {
     bool ok;
     QString value = QInputDialog::getText(this, tr("Edit listToDo"),
                                           tr("ListToDo name"),
@@ -82,32 +64,27 @@ void ListToDo::rename()
     }
 }
 
-void ListToDo::updatestat(const QString &textstat)
-{
+void ListToDo::updatestat(const QString &textstat) {
     cui->statlist->setText(textstat);
 }
 
 
-void ListToDo::on_checkbox_clicked()
-{
+void ListToDo::on_checkbox_clicked() {
 
     Board *board = new Board(mTask, cui->checkbox->text());
-    //Board Board(mTask); //mTask
-    //qDebug() << cui->checkbox->text();
+
     board->setModal(true);
 
-   connect(board, &Board::TaskSaved, this, &ListToDo::saveTask  );
+    connect(board, &Board::TaskSaved, this, &ListToDo::saveTask);
 
     board->exec();
 }
 
-void ListToDo::aprifinestra(ListToDo* t)
-{
-    //t->cui->checkbox->setFocus();
+void ListToDo::aprifinestra(ListToDo *t) {
+
     t->on_checkbox_clicked();
 }
 
-void ListToDo::addTask( Task *task)
-{
+void ListToDo::addTask(Task *task) {
     ListToDo::mTask.append(task);
 }

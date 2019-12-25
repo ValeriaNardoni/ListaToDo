@@ -14,13 +14,12 @@
 
 Task::Task(const QString &name, QWidget *parent) :
         QWidget(parent),
-        tui(new Ui::Task)
-{
+        tui(new Ui::Task) {
 
 
     tui->setupUi(this);
     setName(name);
-    Important=false;
+    Important = false;
     connect(tui->editButton, &QPushButton::clicked,
             this, &Task::rename);
 
@@ -35,44 +34,39 @@ Task::Task(const QString &name, QWidget *parent) :
 
 }
 
-Task::~Task()
-{
+Task::~Task() {
     delete tui;
 }
 
 
-void Task::setName(const QString &name)
-{
+void Task::setName(const QString &name) {
     tui->checkbox->setText(name);
 }
 
-QString Task::name() const
-{
+QString Task::name() const {
     return tui->checkbox->text();
 }
 
-bool Task::isCompleted() const
-{
+bool Task::isCompleted() const {
     return tui->checkbox->isChecked();
 }
 
-QString Task::controlladata(QString data1,QString data2) // data da controllare. data in caso di errore
+QString Task::controlladata(QString data1, QString data2) // data da controllare. data in caso di errore
 {
-    QDate datacont = QDate::fromString(data1,"dd/MM/yyyy" ); // trasforma la stringa ingresso in QDate
-    if (datacont.isValid( datacont.year(), datacont.month(), datacont.day() )) return data1;
+    QDate datacont = QDate::fromString(data1, "dd/MM/yyyy"); // trasforma la stringa ingresso in QDate
+    if (datacont.isValid(datacont.year(), datacont.month(), datacont.day())) return data1;
     return data2;
 }
 
 
-void Task::rename()
-{
+void Task::rename() {
     bool ok;
-    QString name  = this->name();
-    //qDebug() << "RENAME " + name;
-    QString name1o = name.left(name.length()-11);
-    //qDebug() << "TASK " + name1o;
+    QString name = this->name();
+
+    QString name1o = name.left(name.length() - 11);
+
     QString name2o = name.right(10);
-    //qDebug() << "DATA " + name2o;
+
     QString name1 = QInputDialog::getText(this, tr("Edit task"),
                                           tr("Task name"),
                                           QLineEdit::Normal,
@@ -86,13 +80,11 @@ void Task::rename()
                                               &ok);
 
 
-
-        setName(name1+" "+ controlladata(name2, name2o));
+        setName(name1 + " " + controlladata(name2, name2o));
     }
 }
 
-void Task::checked(bool checked)
-{
+void Task::checked(bool checked) {
     QFont font(tui->checkbox->font());
 
     font.setStrikeOut(checked);
@@ -102,48 +94,42 @@ void Task::checked(bool checked)
     emit statusChanged(this);
 }
 
-void Task::setCompleted()
-{
+void Task::setCompleted() {
     Task::checked(true);
     tui->checkbox->setChecked(1);
-    // emit statusChanged(this);
+
 }
 
 
-void Task::setImportant()
-{
-    //Task::Important=true;
+void Task::setImportant() {
     Task::on_Important_clicked();
 }
 
 
-void Task::on_Important_clicked()
-{
-    Task::Important=true;
+void Task::on_Important_clicked() {
+    Task::Important = true;
     QPixmap pix("/home/valeria/Scrivania/03.11.19.b/ListaToDo-master/stella.png");
-    tui->label_pic-> setPixmap(pix.scaled(15,15,Qt::KeepAspectRatio));
+    tui->label_pic->setPixmap(pix.scaled(15, 15, Qt::KeepAspectRatio));
 
     QPalette palette = tui->checkbox->palette();
     palette.setColor(tui->checkbox->foregroundRole(), Qt::red);
     tui->checkbox->setPalette(palette);
 
-    }
+}
 
-void Task::on_NotImportant_clicked()
-{
-    Task::Important=false;
+void Task::on_NotImportant_clicked() {
+    Task::Important = false;
     QPixmap pix("");
-    tui->label_pic-> setPixmap(pix.scaled(15,15,Qt::KeepAspectRatio));
+    tui->label_pic->setPixmap(pix.scaled(15, 15, Qt::KeepAspectRatio));
     QPalette palette = tui->checkbox->palette();
     palette.setColor(tui->checkbox->foregroundRole(), Qt::black);
     tui->checkbox->setPalette(palette);
 
 }
 
-bool Task::isImportant() const
-{
+bool Task::isImportant() const {
 
-   return (this->Important);
-    //return tui->checkbox->palette();
+    return (this->Important);
+
 }
 
